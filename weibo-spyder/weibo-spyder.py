@@ -12,12 +12,12 @@ import requests
 
 url_template = "https://m.weibo.cn/api/container/getIndex?type=wb&queryVal={}&containerid=100103type=2%26q%3D{}&page={}"
 
-rm_words = ['全文', '微博', '超话']
-keyword = '航班'
-image = 'airplane.jpg'
+rm_words = ['全文', '微博', '超话'] # words to be removed
+keyword = '航班' # the keyword to search
+image = 'airplane.jpg' # the background of the word cloud
 
 def clean_text(text):
-    # Get rid of special characters.
+    # Get rid of special characters
     dr = re.compile(r'(<)[^>]+>', re.S)
     dd = dr.sub('', text)
     dr = re.compile(r'#[^#]+#', re.S)
@@ -55,7 +55,7 @@ def fetch_data(query_val, page_id):
 
 
 def remove_duplication(mblogs):
-    assert(len(mblogs) > 0)
+    assert(len(mblogs) > 0) # the mblogs should not be empty
     mid_set = {mblogs[0]['mid']}
     new_blogs = []
     for blog in mblogs[1:]:
@@ -103,14 +103,10 @@ def gen_img(texts, img_file, filename):
 
 if __name__ == '__main__':
     fetch_pages(keyword, 50)
-
     mblogs = json.loads(open('result_{}.json'.format(keyword), 'r', encoding='utf-8').read())
     print('Number of Posts:', len(mblogs))
-
     words = []
     for blog in mblogs:
         words.extend(jieba.analyse.extract_tags(blog['text']))
-
     print("Word Count:", len(words))
-
     gen_img(words, image, keyword)
