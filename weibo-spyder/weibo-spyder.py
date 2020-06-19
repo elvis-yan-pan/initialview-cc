@@ -2,14 +2,13 @@
 
 import re
 import json
+import requests
 import jieba.analyse
-import matplotlib as mpl
 import numpy as np
 import PIL.Image as Image
 from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-import requests
 
+# url template of the website to search
 url_template = "https://m.weibo.cn/api/container/getIndex?type=wb&queryVal={}&containerid=100103type=2%26q%3D{}&page={}"
 
 rm_words = ['全文', '微博', '超话'] # words to be removed
