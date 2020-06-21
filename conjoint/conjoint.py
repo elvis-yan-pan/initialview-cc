@@ -10,13 +10,8 @@ Size of vector x and w: 4+4+4+4 = 16
 '''
 
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-# from sklearn.linear_model import LogisticRegression
 from scipy.optimize import minimize
-
-formatfile = 'format{}.csv'
-filename = 'result{}.csv'
 
 
 def index_to_array(pic_index):
@@ -108,9 +103,6 @@ class ConjointModel():
         self.res = minimize(self.log_likelihood, x0, method='Nelder-Mead')
         return self.res
 
-    def generate_graph(self):
-        pass
-
 
 if __name__ == "__main__":
     print("Conjoint Analysis")
@@ -118,3 +110,4 @@ if __name__ == "__main__":
     Model.read_questions('question.csv')
     Model.read_data('data{}.csv')
     Model.estimate()
+    print(Model.res.x)
