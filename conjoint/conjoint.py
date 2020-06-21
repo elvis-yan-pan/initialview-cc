@@ -98,18 +98,15 @@ class ConjointModel():
             for j in range(self.ans.shape[1]):
                 xrt = self.question_mat[i][j]
                 dots = np.array([np.dot(xrt[k], w) for k in range(self.num_concepts)])
-                exp_dots = np.exp2(dots)
+                exp_dots = np.exp(dots)
                 sum_dots = np.log(exp_dots.sum())
-                s += np.dot(self.ans[i][j], w) / sum_dots
+                s += np.dot(self.ans[i][j], w) - sum_dots
         return -s
 
     def estimate(self):
         x0 = np.ones(self.num_total_attributes) / self.num_total_attributes
         self.res = minimize(self.log_likelihood, x0, method='Nelder-Mead')
         return self.res
-
-    def generate_result(self):
-        pass
 
     def generate_graph(self):
         pass
