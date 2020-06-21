@@ -89,10 +89,6 @@ class ConjointModel():
             data_index_all.extend(data_index)
         self.data = np.array(data_index_all)
         self.ans = np.array(data_vec_all)
-#        self.ans = np.resize(
-#            self.ans,
-#            (self.ans.shape[0] * self.ans.shape[1], self.ans.shape[2])
-#        )  # resize the ans into 2 dimensional
         self.question_mat = np.array(question_vec)
         return self.ans
 
@@ -104,7 +100,7 @@ class ConjointModel():
                 dots = np.array([np.dot(xrt[k], w) for k in range(self.num_concepts)])
                 exp_dots = np.exp2(dots)
                 sum_dots = np.log(exp_dots.sum())
-                s += dots.sum() / sum_dots
+                s += np.dot(self.ans[i][j], w) / sum_dots
         return -s
 
     def estimate(self):
