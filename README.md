@@ -8,3 +8,6 @@ A Weibo crawler based on Python to generate word clouds based on the result of s
 
 ## Conjoint
 A Python program for conjoint analysis.
+
+## Wordcloud
+A Python program for generating word cloud for the demonstration of participants' comments in the survey.
