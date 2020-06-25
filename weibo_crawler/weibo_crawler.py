@@ -33,11 +33,6 @@ def clean_text(text):
 
 
 def fetch_data(query_val, page_id):
-    """
-    Fetch the data from a given page number.
-    query_val: the keyword
-    page_id: the page number
-    """
     # request and load json files
     resp = requests.get(url_template.format(query_val, query_val, page_id))
     card_group = json.loads(resp.text)['data']['cards'][0]['card_group']

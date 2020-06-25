@@ -1,14 +1,5 @@
 # Conjoint Analysis for the InitialView Case Competition
 
-'''
-General Notes:
-R respondents (unknown)
-T tasks (15)
-C concepts (3 or 4)
-4 attributes: theme color icon font
-Size of vector x and w: 4+4+4+4 = 16
-'''
-
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
@@ -34,9 +25,6 @@ def index_to_array(pic_index):
 
 class ConjointModel():
     def __init__(self):
-        """
-        utilities: the values Ux of all the ideas of the concepts.
-        """
         self.num_total_attributes = 15
         self.num_tasks = 32
         self.num_concepts = 3

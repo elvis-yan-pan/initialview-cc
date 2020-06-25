@@ -1,5 +1,5 @@
 # Initial View Case Competition
-The InitialView x United Airlines Case Competition in June 2020. For personal use only.
+The InitialView x United Airlines Case Competition in June 2020.
 
 Author: Yan Pan
 
