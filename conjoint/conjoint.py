@@ -32,17 +32,17 @@ class ConjointModel():
         self.question_vec = None
         self.ans = None
         self.data = None
-        self.Model = None
         self.res = None
         self.question_mat = None
 
     def read_questions(self, filename):
         df = pd.read_csv(filename)
         self.question = df.to_numpy()
-        print(self.question.shape)
+        # print(self.question.shape)
         return self.question
 
     def build_question_vector(self):
+        # The questions for the surveys
         qvec = [[] for j in range(self.question.shape[0])]
         for i in range(self.question.shape[0]):
             qvec[i] = [index_to_array(self.question[i][j])
@@ -55,19 +55,23 @@ class ConjointModel():
         data_vec_all = []
         data_index_all = []
         question_vec = []
-        for i in range(4):
+        for i in range(4):  # 4 surveys
             df = pd.read_csv(filename_format.format(i))
             nda = df.to_numpy()
             raw_data = np.array(nda[:, 8:40], dtype=np.int)
-            print(raw_data.shape)
+            # print(raw_data.shape)
             data_vec = [[] for j in range(raw_data.shape[0])]
             data_index = [[] for j in range(raw_data.shape[0])]
+
             for j in range(raw_data.shape[0]):
-                question_vec.append(self.question_vec[i*32:(i+1)*32])
+                # The corresponding questions
+                question_vec.append(self.question_vec[i * 32:(i + 1) * 32])
                 for k in range(raw_data.shape[1]):
+                    # The index of the picture shown
                     pic_index = self.question[i * 32 + j][raw_data[j][k] - 1]
                     data_vec[j].append(index_to_array(pic_index))
                     data_index[j].append(pic_index)
+            # Put it all together
             data_vec_all.extend(data_vec)
             data_index_all.extend(data_index)
         self.data = np.array(data_index_all)
@@ -75,7 +79,7 @@ class ConjointModel():
         self.question_mat = np.array(question_vec)
         return self.ans
 
-    def log_likelihood(self, w):
+    def log_likelihood(self, w):  # The function to optimize
         s = 0
         for i in range(self.ans.shape[0]):
             for j in range(self.ans.shape[1]):
@@ -88,7 +92,7 @@ class ConjointModel():
 
     def estimate(self):
         x0 = np.ones(self.num_total_attributes) / self.num_total_attributes
-        self.res = minimize(self.log_likelihood, x0, method='Nelder-Mead')
+        self.res = minimize(self.log_likelihood, x0, method='Nelder-Mead')  # Nelder-Mead
         return self.res
 
 
